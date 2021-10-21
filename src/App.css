@@ -1,0 +1,22 @@
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+body {
+  background: #e5e5e5;
+}
+
+.title {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  margin-top: 60px;
+  margin-bottom: 36px;
+}
+
+.content_page {
+  padding: 0 100px;
+}
