@@ -26,6 +26,7 @@ body {
   box-sizing: border-box;
   padding-left: 10px;
   outline: none;
+  font-family: "Montserrat";
 }
 
 .input::placeholder {
