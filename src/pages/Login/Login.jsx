@@ -8,9 +8,17 @@ const Login = () => {
         <span>ViajaComigo</span>
       </div>
       <form className="login__form">
-        <input type="text" placeholder="Email" className="login__form--input" />
-        <input type="text" placeholder="Senha" className="login__form--input" />
-        <button type="submit" className="login__form--btn">
+        <input
+          type="text"
+          placeholder="Email"
+          className="input login__form--input"
+        />
+        <input
+          type="text"
+          placeholder="Senha"
+          className="input login__form--input"
+        />
+        <button type="submit" className="button login__form--btn">
           Entrar
         </button>
       </form>
