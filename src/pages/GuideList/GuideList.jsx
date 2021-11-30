@@ -2,7 +2,7 @@ import React from "react";
 import GuideCard from "../../components/GuideCard/GuideCard";
 import Header from "../../components/Header/Header";
 
-const Guides = () => {
+const GuideList = () => {
   return (
     <div>
       <Header />
@@ -37,4 +37,4 @@ const Guides = () => {
   );
 };
 
-export default Guides;
+export default GuideList;

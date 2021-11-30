@@ -1,0 +1,50 @@
+.guide__info {
+  text-align: center;
+}
+
+.guide__info--publication_date {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: bold;
+  font-size: 14px;
+  color: #918e8e;
+}
+
+.guide__send-comment,
+.guide__info--text,
+.guide__comments {
+  margin: 30px;
+}
+
+.guide__info--text {
+  font-family: "Montserrat";
+  text-align: justify;
+}
+
+.guide__send-comment--form {
+  display: flex;
+  flex-direction: column;
+}
+
+.guide__send-comment--form input,
+.guide__send-comment--form textarea {
+  font-family: "Montserrat";
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin-bottom: 15px;
+}
+
+.guide__send-comment--form input {
+  height: 50px;
+  border: none;
+}
+
+.guide__send-comment--form textarea {
+  border: none;
+  padding: 10px;
+}
+
+.guide__send-comment--form button {
+  width: 197px;
+  height: 54px;
+  align-self: flex-end;
+}
