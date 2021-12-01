@@ -3,14 +3,14 @@ const authConfig = require("../config/auth.json");
 
 module.exports = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  const allowedRoutes = ["/guides", "/comment"];
+  const requestPath = req.path;
 
-  if (allowedRoutes) {
+  if (!requestPath.includes("admin")) {
     return next();
   }
 
   if (!authHeader) {
-    return res.send(401).send({ error: "The token must be provided" });
+    return res.status(401).send({ error: "The token must be provided" });
   }
 
   const parts = authHeader.split(" ");

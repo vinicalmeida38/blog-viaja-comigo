@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
-router.post("/guide", async (req, res) => {
+router.post("/admin/guide", async (req, res) => {
   try {
     const guide = await Guide.create(req.body);
     return res.send({ guide });
@@ -36,20 +36,30 @@ router.get("/guides", async (req, res) => {
     const guides = await Guide.find({});
     return res.send({ guides });
   } catch (err) {
-    return res.status(400).send({ error: "Error on adding guide" });
+    return res.status(400).send({ error: "Error on searching guides" });
   }
 });
 
-router.delete("/guide/:guideId", async (req, res) => {
+router.get("/guide/:guideId", async (req, res) => {
   try {
-    const guide = await Guide.findOneAndDelete(req.params.guideId);
+    const guide = await Guide.findById({ _id: req.params.guideId });
+    return res.send({ guide });
+  } catch (err) {
+    return res.status(400).send({ error: "Error on searching guide" });
+  }
+});
+
+router.delete("/admin/guide/:guideId", async (req, res) => {
+  try {
+    const guide = await Guide.findByIdAndDelete(req.params.guideId);
+    console.log(guide);
     return res.send(guide);
   } catch (err) {
     return res.status(400).send({ error: "Error on deleting guide" });
   }
 });
 
-router.patch("/guide/:guideId", async (req, res) => {
+router.patch("/admin/guide/:guideId", async (req, res) => {
   const { title, author, publicationDate, imageUrl, text } = req.body;
 
   try {
