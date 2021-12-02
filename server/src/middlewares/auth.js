@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
   const parts = authHeader.split(" ");
 
   if (!parts.length === 2) {
-    return res.status(401).send({ error: "Token format invalid" });
+    return res.status(401).send({ error: "Invalid token format" });
   }
 
   const [scheme, token] = parts;
@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
 
   jwt.verify(token, authConfig.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({ error: "Token invalid" });
+      return res.status(401).send({ error: "Invalid token" });
     }
 
     req.userId = decoded.id;

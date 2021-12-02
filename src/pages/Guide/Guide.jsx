@@ -1,38 +1,105 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Guide.css";
 import CommentCard from "../../components/CommentCard/CommentCard";
 import Header from "../../components/Header/Header";
+import api from "../../services/api";
+import { Link, useHistory } from "react-router-dom";
 
 const Guide = () => {
-  const mockGuide = {
-    title: "Viagem NY",
-    author: "Vinícius Almeida",
-    publicationDate: "29/11/2021",
-    imageUrl: "https://cdn.britannica.com/s:575x450/61/75961-004-295F8958.jpg",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla metus justo, ullamcorper eu varius eget, lacinia accumsan ligula. Quisque condimentum diam sed purus condimentum, et bibendum nibh pretium. Nullam at arcu eget libero euismod ultrices ac fermentum sapien. Morbi congue risus at tristique sollicitudin. In suscipit aliquet aliquet. Mauris a eros iaculis, convallis velit sit amet, consequat ipsum. Morbi pharetra, libero non hendrerit semper, nibh magna tincidunt lectus, et mattis felis quam vel nisi. Praesent non risus tempor, vestibulum enim et, sodales sem. Etiam vulputate nisi nisi. Donec ut augue ultricies, sollicitudin massa vitae, tempor urna. Integer condimentum vulputate eros vitae bibendum.",
+  const [guide, setGuide] = useState({});
+  const [name, setName] = useState("");
+  const [comment, setComment] = useState("");
+  const [hasPermission, setHasPermission] = useState(false);
+  const guideId = window.location.pathname.replace("/roteiro/", "");
+  const token = localStorage.getItem("authHeader");
+  const history = useHistory();
+
+  useEffect(() => {
+    if (token !== null) {
+      api.get(`/auth/verify/${token.replace("Bearer ", "")}`).then(() => {
+        setHasPermission(true);
+      });
+    }
+
+    api.get(`/api/guide/${guideId}`).then((res) => {
+      setGuide(res.data.guide);
+    });
+  }, [guideId, token]);
+
+  const handleComment = (e) => {
+    e.preventDefault();
+    api
+      .post(`/api/comment/${guideId}`, {
+        name: name,
+        comment: comment,
+      })
+      .then(() => {
+        setName("");
+        setComment("");
+        api.get(`/api/guide/${guideId}`).then((res) => {
+          setGuide(res.data.guide);
+        });
+      });
+  };
+
+  const handleDeleteGuide = () => {
+    api
+      .delete(`/api/admin/guide/${guideId}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(() => {
+        history.push("/roteiros");
+      });
+  };
+
+  const adminOptions = () => {
+    return (
+      <div className="guide__admin--options">
+        <Link to={`/editar-roteiro/${guideId}`}>
+          <button className="button guide__admin--edit">Editar</button>
+        </Link>
+        <button
+          className="button guide__admin--remove"
+          onClick={handleDeleteGuide}
+        >
+          Remover
+        </button>
+      </div>
+    );
   };
 
   return (
     <>
       <Header />
+      {hasPermission ? adminOptions() : ""}
       <div className="guide__info">
-        <h1 className="title">{mockGuide.title}</h1>
+        <h1 className="title guide__info--title">{guide.title}</h1>
         <p className="guide__info--publication_date">
-          Postado por {mockGuide.author} em {mockGuide.publicationDate}
+          Postado por {guide.author} em {guide.publicationDate}
         </p>
-        <img src={mockGuide.imageUrl} alt={mockGuide.title} width="650px" />
-        <p className="guide__info--text">{mockGuide.text}</p>
+        <img src={guide.imageUrl} alt={guide.title} width="650px" />
+        <p className="guide__info--text">{guide.text}</p>
       </div>
       <div className="guide__send-comment">
         <h2 className="">Deixe seu comentário</h2>
-        <form className="guide__send-comment--form">
-          <input type="text" placeholder="Nome" className="input" />
+        <form className="guide__send-comment--form" onSubmit={handleComment}>
+          <input
+            type="text"
+            placeholder="Nome"
+            className="input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <textarea
             id="comment"
             cols="30"
             rows="10"
             className="input"
             placeholder="Comentário"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
           ></textarea>
           <button type="submit" className="button">
             Comentar
@@ -41,7 +108,17 @@ const Guide = () => {
       </div>
       <div className="guide__comments">
         <h2>Comentários</h2>
-        <CommentCard author="Gigi" comment="Adorei o roteiro!" />
+        <span>{guide.comments && guide.comments.length} comentário(s)</span>
+        {guide.comments &&
+          guide.comments.map((comment) => {
+            return (
+              <CommentCard
+                key={comment._id}
+                author={comment.name}
+                comment={comment.comment}
+              />
+            );
+          })}
       </div>
     </>
   );

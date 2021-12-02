@@ -5,11 +5,11 @@ a {
 
 body {
   background: #e5e5e5;
+  font-family: "Montserrat";
 }
 
 .title {
   text-align: center;
-  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
@@ -22,11 +22,11 @@ body {
 }
 
 .input {
+  font-family: "Montserrat";
   border: 1px solid #000000;
   box-sizing: border-box;
   padding-left: 10px;
   outline: none;
-  font-family: "Montserrat";
 }
 
 .input::placeholder {
@@ -37,11 +37,11 @@ body {
 }
 
 .button {
+  font-family: "Montserrat";
+  font-size: 16px;
   background: #000000;
   border: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #ffffff;
-  font-size: 16px;
-  font-family: "Montserrat";
   cursor: pointer;
 }
