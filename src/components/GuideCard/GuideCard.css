@@ -22,5 +22,12 @@
 .guide_card__details span {
   color: #908e8e;
   font-style: italic;
-  font-weight: 400;
+  font-weight: bold;
+}
+
+.guide_card__text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

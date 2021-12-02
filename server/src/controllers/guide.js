@@ -33,7 +33,10 @@ router.post("/comment/:guideId", async (req, res) => {
 
 router.get("/guides", async (req, res) => {
   try {
-    const guides = await Guide.find({});
+    const mongoQuery = req.query.homePage
+      ? Guide.find().sort({ createdAt: -1 }).limit(4)
+      : Guide.find({});
+    const guides = await mongoQuery;
     return res.send({ guides });
   } catch (err) {
     return res.status(400).send({ error: "Error on searching guides" });
@@ -52,7 +55,6 @@ router.get("/guide/:guideId", async (req, res) => {
 router.delete("/admin/guide/:guideId", async (req, res) => {
   try {
     const guide = await Guide.findByIdAndDelete(req.params.guideId);
-    console.log(guide);
     return res.send(guide);
   } catch (err) {
     return res.status(400).send({ error: "Error on deleting guide" });

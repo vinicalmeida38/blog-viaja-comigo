@@ -15,7 +15,7 @@ const GuideCard = ({ id, image, title, publicationDate, author, text }) => {
             <span>
               Postado por {author} em {publicationDate}
             </span>
-            <p>{text}</p>
+            <p className="guide_card__text">{text}</p>
           </div>
         </div>
       </Link>

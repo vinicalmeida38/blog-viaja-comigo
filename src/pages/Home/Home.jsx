@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../../services/api";
 import "./Home.css";
 import Header from "../../components/Header/Header";
 import GuideCard from "../../components/GuideCard/GuideCard";
 
 const Home = () => {
+  const [lastGuides, setLastGuides] = useState([]);
+
+  useEffect(() => {
+    api.get("/api/guides?homePage=true").then((res) => {
+      setLastGuides(res.data.guides);
+    });
+  }, []);
+
   return (
     <div>
       <Header />
@@ -11,30 +20,19 @@ const Home = () => {
         <h1 className="title">Descomplicando suas futuras viagens</h1>
         <h3>Últimas postagens</h3>
         <div>
-          <GuideCard
-            id="01"
-            image="https://cdn.britannica.com/s:575x450/61/75961-004-295F8958.jpg"
-            title="Melhores lugares de Nova Iorque!"
-            author="Vinicius Almeida"
-            date="06/10/2021"
-            article="Description"
-          />
-          <GuideCard
-            id="02"
-            image="https://cdn.britannica.com/s:575x450/61/75961-004-295F8958.jpg"
-            title="Melhores lugares de Nova Iorque!"
-            author="Vinicius Almeida"
-            date="06/10/2021"
-            article="Description"
-          />
-          <GuideCard
-            id="03"
-            image="https://cdn.britannica.com/s:575x450/61/75961-004-295F8958.jpg"
-            title="Melhores lugares de Nova Iorque!"
-            author="Vinicius Almeida"
-            date="06/10/2021"
-            article="Description"
-          />
+          {lastGuides.map((guide) => {
+            return (
+              <GuideCard
+                key={guide._id}
+                id={guide._id}
+                image={guide.imageUrl}
+                title={guide.title}
+                author={guide.author}
+                publicationDate={guide.publicationDate}
+                text={guide.text}
+              />
+            );
+          })}
         </div>
       </section>
     </div>
