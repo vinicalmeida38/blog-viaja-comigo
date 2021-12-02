@@ -6,7 +6,7 @@ const NewGuide = () => {
   return (
     <>
       <Header />
-      <GuideForm pageTitle="Novo roteiro" />
+      <GuideForm pageTitle="Novo roteiro" formType="NEW_GUIDE" />
     </>
   );
 };

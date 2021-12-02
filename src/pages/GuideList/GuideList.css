@@ -1,0 +1,9 @@
+.guide_list__new-guide {
+  text-align: center;
+}
+
+.guide_list__new-guide--btn {
+  width: 180px;
+  height: 54px;
+  margin: 15px;
+}

@@ -42,4 +42,11 @@ router.post("/authenticate", async (req, res) => {
   res.send({ user, token });
 });
 
+router.get("/verify/:token", async (req, res) => {
+  const token = req.params.token;
+  jwt.verify(token, authConfig.secret, (err, verifiedJwt) => {
+    return err ? res.status(400).send(err.message) : res.send(verifiedJwt);
+  });
+});
+
 module.exports = (app) => app.use("/auth", router);

@@ -1,5 +1,24 @@
+.guide__admin--options {
+  float: right;
+  margin: 20px 50px;
+}
+.guide__admin--edit,
+.guide__admin--remove {
+  width: 130px;
+  height: 40px;
+}
+
+.guide__admin--remove {
+  margin-left: 15px;
+  background-color: #ff000f;
+}
+
 .guide__info {
   text-align: center;
+}
+
+.guide__info--title {
+  margin-top: 80px;
 }
 
 .guide__info--publication_date {

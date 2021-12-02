@@ -36,3 +36,8 @@
   height: 54px;
   margin-top: 58px;
 }
+
+.login__form--error-msg {
+  color: #ff000f;
+  margin-top: 25px;
+}
