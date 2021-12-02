@@ -23,13 +23,15 @@ const GuideForm = ({
 
   useEffect(() => {
     if (formType === "EDIT_GUIDE") {
-      setGuideTitle(title);
-      setGuideAuthor(author);
-      setGuideDate(publicationDate);
-      setGuideImageUrl(imageUrl);
-      setGuideText(text);
+      api.get(`/api/guide/${id}`).then((res) => {
+        setGuideTitle(res.data.guide.title);
+        setGuideAuthor(res.data.guide.author);
+        setGuideDate(res.data.guide.publicationDate);
+        setGuideImageUrl(res.data.guide.imageUrl);
+        setGuideText(res.data.guide.text);
+      });
     }
-  }, [formType, title, author, publicationDate, imageUrl, text]);
+  }, [id, formType, title, author, publicationDate, imageUrl, text]);
 
   const handleNewGuide = (e) => {
     e.preventDefault();
